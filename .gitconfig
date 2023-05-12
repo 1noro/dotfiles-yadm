@@ -1,0 +1,26 @@
+[user]
+	email = ppuubblliicc@protonmail.com
+	name = 1noro
+	signingkey = 224E59DC1CF60B98
+
+[commit]
+	gpgsign = true
+
+[pull]
+	rebase = false
+
+[init]
+	defaultBranch = master
+
+[alias]
+	st = status
+	fap = !git fetch --all --prune && git pull
+	ll = log --oneline
+	last = log -1 HEAD --stat
+	cm = commit -m
+	d = diff
+	dv = difftool -t vimdiff -y
+	se = !git rev-list --all | xargs git grep -F
+	ch = checkout
+	b = branch
+	bb = branch -a
