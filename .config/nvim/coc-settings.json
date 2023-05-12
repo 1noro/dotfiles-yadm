@@ -1,0 +1,15 @@
+{
+    "diagnostic-languageserver.filetypes": {
+        "vim": "vint",
+        "markdown": [ "write-good", "markdownlint" ],
+        "sh": "shellcheck",
+        "php": ["phpstan", "psalm"],
+        "yaml": [ "yamllint" ],
+        "cmake": [ "cmake-lint", "cmakelint" ],
+        "systemd": "systemd-analyze"
+    },
+    "diagnostic-languageserver.formatFiletypes": {
+        "sh": "shfmt",
+        "cmake": "cmake-format"
+    }
+}
