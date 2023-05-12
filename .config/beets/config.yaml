@@ -1,0 +1,15 @@
+directory: /nfs/Music/Beets
+library: /nfs/Music/beets.db
+art_filename: cover
+ui:
+    color: yes
+import:
+    move: no
+    bell: yes
+    log: /nfs/Music/beets.log
+paths:
+    default: $albumartist/$album%aunique{}/$track - $title
+    singleton: Non-Album/$artist/$title
+    comp: Compilations/$album%aunique{}/$track - $title
+#    albumtype:soundtrack: Soundtracks/$album/$track - $title
+plugins: fetchart embedart

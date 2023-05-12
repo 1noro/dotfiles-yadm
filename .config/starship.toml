@@ -1,0 +1,14 @@
+# Inserta una línea en blanco al inicio del prompt
+add_newline = false
+
+# Reemplaza el símbolo "❯" por "➜" en el prompt
+[character]                            # El nombre del módulo que se está configurandoes "character"
+success_symbol = "[➜](bold green)"     # El segmento "success_symbol" es reemplzado por "➜" con el color "bold green"
+error_symbol = "[➜](bold red)"
+
+# Deshabilita el módulo "package", ocultándolo por completo del prompt
+[package]
+disabled = true
+
+[line_break]
+disabled = true
