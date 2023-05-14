@@ -1,6 +1,6 @@
 #!/bin/bash
 # ~/.bashrc
-# Maintainer: 1noro <ppuubblliicc@protonmail..com>
+# Maintainer: 1noro <inoro@cover.mozmail.com>
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
