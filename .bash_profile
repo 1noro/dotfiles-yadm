@@ -24,6 +24,7 @@ elif [ -f "$HOME/.nvm/nvm.sh" ]; then
 fi
 
 # CUSTOM EXPORTS
+export PATH=$HOME/.local/bin:$PATH
 #export TERM=xterm-256color
 export COLORTERM=truecolor
 export EDITOR=nvim
