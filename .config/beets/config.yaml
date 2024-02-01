@@ -12,4 +12,13 @@ paths:
     singleton: Non-Album/$artist/$title
     comp: Compilations/$album%aunique{}/$track - $title
 #    albumtype:soundtrack: Soundtracks/$album/$track - $title
+
+# https://beets.readthedocs.io/en/stable/plugins/web.html
+# deps for web plugin: pip install flask (optional flask-cors)
+# for archo: pacman -S python-flask
 plugins: fetchart embedart
+# plugins: fetchart embedart web
+
+# web:
+#     host: 0.0.0.0
+#     readonly: yes
