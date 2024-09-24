@@ -1,5 +1,5 @@
 " init.vim
-" Maintainer: 1noro <ppuubblliicc@protonmail..com> 
+" Maintainer: 1noro <inoro@cover.mozmail..com>
 
 " Map leader to space
 let mapleader=" "
@@ -9,22 +9,22 @@ let mapleader=" "
 " Install vim-plug: https://github.com/junegunn/vim-plug#unix-linux
 call plug#begin('~/.config/nvim/plugged')
     " File system explorer
-    Plug 'preservim/nerdtree'
+    " Plug 'preservim/nerdtree'
     " True snippet and additional text editing support
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
     " Shows a git diff in the sign column
     Plug 'airblade/vim-gitgutter'
     " Fix CursorHold performance
     Plug 'antoinemadec/FixCursorHold.nvim'
     " A collection of language packs for Vim (programming)
-    Plug 'sheerun/vim-polyglot'
+    " Plug 'sheerun/vim-polyglot'
     " Display thin vertical lines at each indentation level
     Plug 'Yggdroot/indentLine'
     " Telescope dependence
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    " Plug 'nvim-lua/plenary.nvim'
+    " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     " Highly extendable fuzzy finder over lists
-    Plug 'nvim-telescope/telescope.nvim'
+    " Plug 'nvim-telescope/telescope.nvim'
     " A light and configurable statusline/tabline
     Plug 'itchyny/lightline.vim'
     " The premier Vim plugin for Git (lightline dependence)
@@ -195,13 +195,13 @@ nnoremap <F4> :execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")<CR>
 
 
 " # NERDTREE ------------------------------------------------------------------
-" NERDTreeToggle when <F3>
-noremap <F3> :NERDTreeToggle<CR>
-"inoremap <F3> <C-o>:NERDTreeToggle<CR>
-"cnoremap <F3> <C-c>:NERDTreeToggle<CR>
+" " NERDTreeToggle when <F3>
+" noremap <F3> :NERDTreeToggle<CR>
+" "inoremap <F3> <C-o>:NERDTreeToggle<CR>
+" "cnoremap <F3> <C-c>:NERDTreeToggle<CR>
 
-" NERDTree show hidden files by default
-let NERDTreeShowHidden=1
+" " NERDTree show hidden files by default
+" let NERDTreeShowHidden=1
 
 
 " # LINE NUMBERS --------------------------------------------------------------
@@ -249,59 +249,59 @@ endif
 
 
 " # COC -----------------------------------------------------------------------
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" " Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-" Enable highlight current symbol on CursorHold:
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" " Enable highlight current symbol on CursorHold:
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" In milliseconds, used for both CursorHold and CursorHoldI,
-" use updatetime instead if not defined
-let g:cursorhold_updatetime = 100
+" " In milliseconds, used for both CursorHold and CursorHoldI,
+" " use updatetime instead if not defined
+" let g:cursorhold_updatetime = 100
 
-" Use <C-r> to trigger completion
-inoremap <silent><expr> <C-r> coc#refresh()
+" " Use <C-r> to trigger completion
+" inoremap <silent><expr> <C-r> coc#refresh()
 
-" Use <Tab> and <S-Tab> to navigate the completion list
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" " Use <Tab> and <S-Tab> to navigate the completion list
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Coc auto-install extensions
-let g:coc_global_extensions = [ 
-    \ 'coc-json',
-    \ 'coc-sh',
-    \ 'coc-diagnostic',
-    \ 'coc-yaml',
-    \ 'coc-html',
-    \ 'coc-sql',
-    \ 'coc-groovy',
-    \ 'coc-docker']
+" " Coc auto-install extensions
+" let g:coc_global_extensions = [ 
+"     \ 'coc-json',
+"     \ 'coc-sh',
+"     \ 'coc-diagnostic',
+"     \ 'coc-yaml',
+"     \ 'coc-html',
+"     \ 'coc-sql',
+"     \ 'coc-groovy',
+"     \ 'coc-docker']
 
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+" " Symbol renaming.
+" nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code.
-"xmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected) " Conflicto con telescope
+" " Formatting selected code.
+" "xmap <leader>f  <Plug>(coc-format-selected)
+" "nmap <leader>f  <Plug>(coc-format-selected) " Conflicto con telescope
 
 " # TELESCOPE -----------------------------------------------------------------
-" Find files using Telescope command-line sugar
-nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
-nnoremap <leader>fa <cmd>Telescope find_files hidden=true no_ignore=true<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep hidden=true<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <leader>fr <cmd>Telescope resume<cr>
+" " Find files using Telescope command-line sugar
+" nnoremap <leader>ff <cmd>Telescope find_files hidden=true<cr>
+" nnoremap <leader>fa <cmd>Telescope find_files hidden=true no_ignore=true<cr>
+" nnoremap <leader>fg <cmd>Telescope live_grep hidden=true<cr>
+" nnoremap <leader>fb <cmd>Telescope buffers<cr>
+" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" nnoremap <leader>fr <cmd>Telescope resume<cr>
 
 " # LIGHTLINE -----------------------------------------------------------------
 let g:lightline = {
