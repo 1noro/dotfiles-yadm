@@ -1,6 +1,6 @@
 #!/bin/bash
 # ~/.bash_profile
-# Maintainer: 1noro <ppuubblliicc@protonmail..com>
+# Maintainer: 1noro <inoro@cover.mozmail..com>
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 export GPG_TTY=$(tty)

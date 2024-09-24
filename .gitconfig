@@ -10,7 +10,7 @@
 	rebase = false
 
 [init]
-	defaultBranch = master
+	defaultBranch = main
 
 [alias]
 	st = status
@@ -24,3 +24,4 @@
 	ch = checkout
 	b = branch
 	bb = branch -a
+	chm = checkout main
