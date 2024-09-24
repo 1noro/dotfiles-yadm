@@ -7,7 +7,7 @@
 
 # VTE (FOR TILIX)
 #if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        #source /etc/profile.d/vte.sh
+#source /etc/profile.d/vte.sh
 #fi
 
 # PROMPT
@@ -20,14 +20,14 @@
 # export PS1="\[\033[38;5;9m\][\[$(tput sgr0)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;6m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;13m\]\W\[$(tput sgr0)\]\[\033[38;5;11m\]\$(parse_git_branch)\[$(tput sgr0)\]\[\033[38;5;9m\]]\[$(tput sgr0)\]\\$\[$(tput sgr0)\] "
 
 # - starship prompt
-if command -v starship &> /dev/null; then
+if command -v starship &>/dev/null; then
     eval "$(starship init bash)"
 fi
 
 # AUTOCOMPLETION
 # (https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
 if [ -f ~/bin/git-completion.bash ]; then
-  . ~/bin/git-completion.bash
+    . ~/bin/git-completion.bash
 fi
 
 # PACMAN UPDATE REMINDER
@@ -47,15 +47,15 @@ if [ -f /usr/share/nvm/init-nvm.sh ]; then
     source /usr/share/nvm/init-nvm.sh
 elif [ -f "$HOME/.nvm/nvm.sh" ]; then
     export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 fi
 
 # LF
 # Change working dir in shell to last dir in lf on exit (adapted from ranger)
 # (https://raw.githubusercontent.com/gokcehan/lf/master/etc/lfcd.sh)
-if command -v lf &> /dev/null; then
-    lfcd () {
+if command -v lf &>/dev/null; then
+    lfcd() {
         tmp="$(mktemp)"
         lf -last-dir-path="$tmp" "$@"
         if [ -f "$tmp" ]; then
@@ -104,7 +104,7 @@ complete -cf sudo
 
 # BINDS
 bind '"\C-g":"cd-fzf\C-m"'
-bind '"\C-e":"code .\C-m"'
+bind '"\C-e":"zed .\C-m"'
 
 # ALIAS
 # - color
@@ -117,7 +117,7 @@ alias di='docker images'
 alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"'
 # - sxiv
 alias img='sxiv -a' # -a para iniciar la animaciones auto
-alias x='sxiv -at' # -at para iniciar la animaciones auto y abrir en thumbnail mode
+alias x='sxiv -at'  # -at para iniciar la animaciones auto y abrir en thumbnail mode
 # - quick access
 alias m='make'
 alias b='xkbbell'
@@ -133,6 +133,7 @@ alias yt="yt-dlp --add-metadata -i -o '%(upload_date)s-%(title)s.%(ext)s'"
 alias yt2mp3="yt-dlp -f 'ba' -x --audio-format mp3"
 alias fuck='sudo !!'
 # alias pandoc="docker run --rm --volume \"$(pwd):/data\" --user $(id -u):$(id -g) pandoc/latex"
+alias zed='zeditor'
 # - git
 alias g='git'
 alias gst='git status'
@@ -156,4 +157,3 @@ alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
 # - alias for the contemporary-z program
 alias z='. ~/.local/share/cz/cz.sh'
-
