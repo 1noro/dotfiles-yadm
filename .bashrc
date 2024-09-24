@@ -144,9 +144,9 @@ cd-fzf() {
 # command to cd to a ~/repos folder
 # to bind to a key, use something like: gnome-terminal -- bash -c "CD_REPOS=1 bash"
 cd-fzf-repos() {
-    REPO=$(ls ~/git | fzf --multi --preview 'exa --icons -1 ~/repos/{1}')
+    REPO=$(ls ~/repos | fzf --multi --preview 'exa --icons -1 ~/repos/{1}')
     if [[ -n "$REPO" ]]; then
-        cd "$HOME/git/$REPO" || return
+        cd "$HOME/repos/$REPO" || return
     fi
 }
 
