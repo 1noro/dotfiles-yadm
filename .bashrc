@@ -2,24 +2,42 @@
 # ~/.bashrc
 # Maintainer: 1noro <inoro@cover.mozmail..com>
 
-## COMMON
+### VARIABLES ##################################################################
+
+LOCAL_BIN="$HOME/.bin"
+
+# create local bin directory if it doesn't exist
+if [ ! -d "$LOCAL_BIN" ]; then
+    mkdir -p "$LOCAL_BIN"
+fi
+
+
+### EXPORTS ####################################################################
+
+# > The most global exports are in the .bash_profile file
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+# para que las aplicaciones qt usen wayland (creo que no funciona muy bien)
+export QT_QPA_PLATFORM=wayland
+
+#complete -c man which
+complete -cf sudo
+
+# BINDS
+bind '"\C-l":"cd-fzf\C-m"'
+bind '"\C-@":"cd-fzf-repos\C-m"'
+bind '"\C-e":"code .\C-m"'
+#- tab completion like zsh
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+
+
+### COMMON #####################################################################
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# VTE (FOR TILIX)
-#if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-#source /etc/profile.d/vte.sh
-#fi
-
 # PROMPT
-# - bash prompt
-# parse_git_branch() {
-#     if [[ -d ".git" ]]; then
-#         git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#     fi
-# }
-# export PS1="\[\033[38;5;9m\][\[$(tput sgr0)\]\[\033[38;5;11m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;6m\]\h\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;13m\]\W\[$(tput sgr0)\]\[\033[38;5;11m\]\$(parse_git_branch)\[$(tput sgr0)\]\[\033[38;5;9m\]]\[$(tput sgr0)\]\\$\[$(tput sgr0)\] "
 
 # - starship prompt
 if command -v starship &>/dev/null; then
@@ -27,28 +45,24 @@ if command -v starship &>/dev/null; then
 fi
 
 # AUTOCOMPLETION
-# (https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
-if [ -f ~/bin/git-completion.bash ]; then
-    . ~/bin/git-completion.bash
+
+#- git
+if [ -f /usr/share/bash-completion/completions/git ]; then
+    . /usr/share/bash-completion/completions/git
+elif [ -f $LOCAL_BIN/git-completion.bash ]; then
+    # (https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
+    . $LOCAL_BIN/git-completion.bash
 fi
 
-if [ -f ~/.bash_completion.d/makefile_completion.sh ]; then
-    source ~/.bash_completion.d/makefile_completion.sh
+#- makefile
+if [ -f /usr/share/bash-completion/completions/make ]; then
+    . /usr/share/bash-completion/completions/make
+elif [ -f $LOCAL_BIN/makefile_completion.sh ]; then
+    . $LOCAL_BIN/make-completion.bash
 fi
-
-# PACMAN UPDATE REMINDER
-# FLAG="/tmp/check_updates.flag"
-# if command -v pacman &> /dev/null; then
-#     if [[ $(pacman -Qu) ]]; then
-#         if [ ! -f $FLAG ]; then
-#             echo "sudo pacman -Syyu" >> ~/.histfile
-#             touch $FLAG
-#         fi
-#         echo -e "Have you checked the \e[92m\e[1mupdates\e[0m yet?"
-#     fi
-# fi
 
 # NVM
+
 cdnvm() {
     command cd "$@" || return $?
     nvm_path=$(nvm_find_up .nvmrc | tr -d '\n')
@@ -103,6 +117,7 @@ elif [ -f "$HOME/.nvm/nvm.sh" ]; then
 fi
 
 # LF
+
 # Change working dir in shell to last dir in lf on exit (adapted from ranger)
 # (https://raw.githubusercontent.com/gokcehan/lf/master/etc/lfcd.sh)
 if command -v lf &>/dev/null; then
@@ -125,7 +140,8 @@ if command -v lf &>/dev/null; then
     bind '"\C-o":"lfcd\C-m"'
 fi
 
-## FUNCTIONS
+
+### FUNCTIONS ##################################################################
 
 history-top() {
     history | awk 'BEGIN {FS="[ \t]+|\\|"} {print $3}' | sort | uniq -c | sort -nr | head -20
@@ -169,42 +185,25 @@ dirn() {
 }
 
 dbash() {
-    docker exec -it -u $(id -u):$(id -g) $1 bash
+    if [ -n "$1" ]; then
+        docker exec -it -u $(id -u):$(id -g) $1 bash
+    else
+    container=$(docker ps --format "{{.Names}}" | fzf)
+        echo $container
+        docker exec -it -u $(id -u):$(id -g) $container bash
+    fi
 }
 
 dbrash() {
     docker exec -it -u 0:0 $1 bash
 }
 
-# kill docker-compose
-# killdc() {
-#     if ps -a | grep docker-compose > /dev/null; then
-#         kill -9 "$(ps -a | grep docker-compose | awk '{print $1}')"
-#     else
-#         echo "docker-compose is not running"
-#     fi
-# }
-
 pacman-fzf() {
     pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
 }
 
-## EXPORTS
 
-# > The most global exports are in the .bash_profile file
-export HISTSIZE=10000
-export HISTFILESIZE=10000
-# para que las aplicaciones qt usen wayland (creo que no funciona muy bien)
-export QT_QPA_PLATFORM=wayland
-
-#complete -c man which
-complete -cf sudo
-
-# BINDS
-bind '"\C-g":"cd-fzf\C-m"'
-bind '"\C-e":"code .\C-m"'
-
-## ALIAS
+### ALIAS ######################################################################
 
 # - color
 alias ls='ls --color=auto'
@@ -221,6 +220,11 @@ alias img='sxiv -a' # -a para iniciar la animaciones auto
 alias x='sxiv -at'  # -at para iniciar la animaciones auto y abrir en thumbnail mode
 # - quick access
 alias m='make'
+# check if _comp_cmd_make is defined
+# if [ -n "$(type -t _comp_cmd_make)" ]; then
+#     # not working
+#     complete -F _comp_cmd_make m
+# fi
 alias b='xkbbell'
 alias e='$EDITOR'
 alias v='$EDITOR'
@@ -237,6 +241,10 @@ alias fuck='sudo !!'
 alias zed='zeditor'
 # - git
 alias g='git'
+# check if __git_wrap__git_main is defined
+if [ -n "$(type -t __git_wrap__git_main)" ]; then
+    complete -o bashdefault -o default -o nospace -F __git_wrap__git_main g
+fi
 alias gst='git status'
 alias gl='git pull'
 alias gup='git fetch && git rebase'
@@ -259,7 +267,8 @@ alias grhh='git reset HEAD --hard'
 # - alias for the contemporary-z program
 alias z='. ~/.local/share/cz/cz.sh'
 
-## INIT LOGIC
+
+### INIT LOGIC #################################################################
 
 # if CD_REPOS is set to 1, exceute cd-fzf-repos
 if [ "$CD_REPOS" = "1" ]; then
@@ -267,6 +276,7 @@ if [ "$CD_REPOS" = "1" ]; then
     cd-fzf-repos
 fi
 
-## EXTRA
+
+### EXTRA ######################################################################
 
 # nothing for now...
