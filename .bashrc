@@ -18,18 +18,15 @@ fi
 export HISTSIZE=100000
 export HISTFILESIZE=100000
 # para que las aplicaciones qt usen wayland (creo que no funciona muy bien)
-export QT_QPA_PLATFORM=wayland
-
-#complete -c man which
-complete -cf sudo
+# export QT_QPA_PLATFORM=wayland # in .bashrc_ext
 
 # BINDS
-bind '"\C-l":"cd-fzf\C-m"'
+# bind '"\C-l":"cd-fzf\C-m"'
 bind '"\C-@":"cd-fzf-repos\C-m"'
 bind '"\C-e":"code .\C-m"'
 #- tab completion like zsh
-bind 'set show-all-if-ambiguous on'
-bind 'TAB:menu-complete'
+# bind 'set show-all-if-ambiguous on'
+# bind 'TAB:menu-complete'
 
 
 ### COMMON #####################################################################
@@ -45,6 +42,9 @@ if command -v starship &>/dev/null; then
 fi
 
 # AUTOCOMPLETION
+
+#complete -c man which
+complete -cf sudo
 
 #- git
 if [ -f /usr/share/bash-completion/completions/git ]; then
@@ -198,10 +198,6 @@ dbrash() {
     docker exec -it -u 0:0 $1 bash
 }
 
-pacman-fzf() {
-    pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
-}
-
 
 ### ALIAS ######################################################################
 
@@ -229,8 +225,6 @@ alias b='xkbbell'
 alias e='$EDITOR'
 alias v='$EDITOR'
 alias vc='nvim ~/.config/nvim/init.vim'
-alias p='sudo pacman'
-alias lsp='pacman -Qett --color=always | less -R' # list packages
 alias SS='sudo systemctl'
 alias j='journalctl -xe'
 alias Sjf='sudo journalctl -p 3 -xb'
@@ -264,8 +258,6 @@ alias ga='git add'
 alias gm='git merge'
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
-# - alias for the contemporary-z program
-alias z='. ~/.local/share/cz/cz.sh'
 
 
 ### INIT LOGIC #################################################################
@@ -279,4 +271,6 @@ fi
 
 ### EXTRA ######################################################################
 
-# nothing for now...
+if [ -f ~/.bashrc_ext ]; then
+    source ~/.bashrc_ext
+fi
