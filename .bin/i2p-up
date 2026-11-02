@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+echo "Connecting to i2p host..."
+ssh -fTNL 4444:127.0.0.1:4444 \
+    -L 4447:127.0.0.1:4447 \
+    -L 7654:127.0.0.1:7654 \
+    -L 7070:127.0.0.1:7070 \
+    -L 59556:127.0.0.1:59556 \
+    i2p
+echo "Connection to the i2p host has been successfully established"
+echo "You now can access:"
+echo "  - HTTP Proxy:   127.0.0.1:4444"
+echo "  - Socks Proxy:  127.0.0.1:4447"
+echo "  - I2CP API:     127.0.0.1:7654"
+echo "  - i2pd console: http://127.0.0.1:7070/"
+echo "  - darkstat:     http://127.0.0.1:59556/"

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "llamacpp/local-model",
+  "theme": "gruvbox-dark",
+  "permission": {
+    "websearch": "deny"
+  },
+  "mcp": {
+    "servers": {
+      "searxng": {
+        "type": "local",
+        "command": [
+          "docker",
+          "run",
+          "-i",
+          "--rm",
+          "--init",
+          "--network",
+          "host",
+          "-e",
+          "SEARXNG_URL=http://127.0.0.1:8888",
+          "isokoliuk/mcp-searxng:2.6.0"
+        ],
+        "codemode": false,
+        "timeout": 30000
+      }
+    }
+  },
+  "providers": {
+    "llamacpp": {
+      "name": "llama.cpp (local)",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "http://127.0.0.1:8080/v1",
+        "apiKey": "sk-local"
+      },
+      "models": {
+        "local-model": {
+          "name": "Modelo local (llama.cpp)",
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          }
+        }
+      }
+    }
+  },
+  "enabled_providers": [
+    "llamacpp"
+  ],
+  "share": "disabled"
+}

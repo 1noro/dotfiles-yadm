@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+SSH_PID=$(ps aux | grep 'ssh -fTNL' | head -n 1 | awk '{print $2}')
+echo "Killing $SSH_PID..."
+kill $SSH_PID
+echo "Ok"
