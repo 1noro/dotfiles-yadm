@@ -288,3 +288,4 @@ if [ -f ~/.bashrc_ext ]; then
 fi
 # opencode
 export PATH=/home/cosmo/.opencode/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
