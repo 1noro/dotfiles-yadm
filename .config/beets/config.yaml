@@ -16,7 +16,7 @@ paths:
 # https://beets.readthedocs.io/en/stable/plugins/web.html
 # deps for web plugin: pip install flask (optional flask-cors)
 # for archo: pacman -S python-flask
-plugins: fetchart embedart
+plugins: musicbrainz fetchart embedart
 # plugins: fetchart embedart web
 
 # web:
