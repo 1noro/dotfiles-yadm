@@ -1,0 +1,49 @@
+# Antialiasing, subpixel y hinting se controlan desde fontconfig:
+# ~/.config/fontconfig/fonts.conf
+
+[window]
+dimensions = { columns = 80, lines = 24 }
+padding = { x = 8, y = 8 }
+dynamic_title = true
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font Mono", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font Mono", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font Mono", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font Mono", style = "Bold Italic" }
+size = 13.0
+
+[colors.primary]
+background = "#262626" # like my nvim bg
+foreground = "#ebdbb2"
+
+[colors.normal]
+black = "#282828"
+red = "#cc241d"
+green = "#98971a"
+yellow = "#d79921"
+blue = "#458588"
+magenta = "#b16286"
+cyan = "#689d6a"
+white = "#a89984"
+
+[colors.bright]
+black = "#928374"
+red = "#fb4934"
+green = "#b8bb26"
+yellow = "#fabd2f"
+blue = "#83a598"
+magenta = "#d3869b"
+cyan = "#8ec07c"
+white = "#ebdbb2"
+
+[bell]
+animation = "EaseOutExpo"
+duration = 30
+color = "#282828"
+
+[cursor.style]
+blinking = "On"
+
+[terminal.shell]
+program = "zellij"
