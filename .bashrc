@@ -12,11 +12,16 @@ if [ ! -d "$LOCAL_BIN" ]; then
 fi
 
 
-### EXPORTS ####################################################################
+### EXPORTS Y CONFIGURACIÓN DE HISTORIAL #######################################
 
 # > The most global exports are in the .bash_profile file
 export HISTSIZE=100000
 export HISTFILESIZE=100000
+
+# [CORRECCIÓN ZELLIJ] Configuración para compartir historial entre paneles
+shopt -s histappend
+export PROMPT_COMMAND="history -a; history -n${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+
 # para que las aplicaciones qt usen wayland (creo que no funciona muy bien)
 # export QT_QPA_PLATFORM=wayland # in .bashrc_ext
 
@@ -181,21 +186,28 @@ gpp() {
 
 # docker images remove none
 dirn() {
-    docker image rm '$(docker images | grep none | awk "{print $3}")'
+    # [CORRECCIÓN]: Comando nativo de docker para borrar imágenes <none> (dangling)
+    docker image prune -f
+    
+    # Alternativa manual corregida por si necesitas usar awk en el futuro:
+    # docker rmi $(docker images | awk '/none/ {print $3}')
 }
 
 dbash() {
     if [ -n "$1" ]; then
-        docker exec -it -u $(id -u):$(id -g) $1 bash
+        docker exec -it -u $(id -u):$(id -g) "$1" bash
     else
-    container=$(docker ps --format "{{.Names}}" | fzf)
-        echo $container
-        docker exec -it -u $(id -u):$(id -g) $container bash
+        container=$(docker ps --format "{{.Names}}" | fzf)
+        # [CORRECCIÓN]: Solo ejecutamos si el usuario no canceló la selección de fzf
+        if [ -n "$container" ]; then
+            echo "$container"
+            docker exec -it -u $(id -u):$(id -g) "$container" bash
+        fi
     fi
 }
 
 dbrash() {
-    docker exec -it -u 0:0 $1 bash
+    docker exec -it -u 0:0 "$1" bash
 }
 
 
@@ -274,3 +286,5 @@ fi
 if [ -f ~/.bashrc_ext ]; then
     source ~/.bashrc_ext
 fi
+# opencode
+export PATH=/home/cosmo/.opencode/bin:$PATH
